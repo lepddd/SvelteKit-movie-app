@@ -1,7 +1,9 @@
 <script>
-	export let data	
+	export let data;
 
-	console.log(data)
+	console.log(data);
+
+	/* TODO: Fazer a página para cada filme em específico */
 </script>
 
-<h1>{data.movies.title}</h1>
+<h1>Movie/id</h1>

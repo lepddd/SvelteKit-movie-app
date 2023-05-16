@@ -1,9 +1,13 @@
-export async function load({ fetch, params }) {
-	const key = import.meta.env.VITE_MOVIEDB_KEY;
-	const URL = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=1`;
+export async function load({ fetch }) {
+	const popular = fetch('/movies/popular/1').then((res) => res.json());
 
-	const response = await fetch(URL);
-	const data = await response.json();
+	const toprated = fetch('/movies/top_rated/1').then((res) => res.json());
 
-	return { movies: data.results };
+	const upcoming = fetch('/movies/upcoming/1').then((res) => res.json());
+
+	const data = await Promise.all([popular, toprated, upcoming]).then((data) => data);
+
+	return {
+		movies: { popular: data[0].results, toprated: data[1].results, upcoming: data[2].results }
+	};
 }
